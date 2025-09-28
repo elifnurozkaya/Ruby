@@ -21,6 +21,14 @@ list.prepend(11)
 # puts list.contains?(3)
 # puts list.contains?(32)
 
-list.find(12)
-list.find(11)
-list.find("e")
+# list.find(12)
+# list.find(11)
+# list.find("e")
+
+# list.to_s
+# list.insert_at("cat",2)
+# list.to_s
+
+list.to_s
+list.remove_at(0)
+list.to_s
