@@ -12,16 +12,16 @@ class HashMap
     hash_code = 0
     prime_num = 31
 
-    key.each_char {|char| hash_code = hash_code * prime_num + char}
+    key.each_char {|char| hash_code = hash_code * prime_num + char.ord}
 
-    return hash_code
+    return hash_code % @capacity
   end
 
   def set(key,value)
     hash_val = self.hash(key)
 
     if @buckets[hash_val] == nil
-            @buckets[hash_value] = Node.new(key,value)
+            @buckets[hash_val] = Node.new(key,value)
     else
       current = @buckets[hash_val]
       while current.next_node !=nil
@@ -30,6 +30,10 @@ class HashMap
           return
         end
         current = current.next_node
+      end
+      if current.key == key
+          current.value = value
+          return
       end
       current.next_node = Node.new(key,value)
     end
