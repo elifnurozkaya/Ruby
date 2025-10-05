@@ -14,7 +14,8 @@ class Tree
     @data = self.merge_sort(cleaned_arr)
 
     self.to_bst(@data)
-    end
+  end
+
   def to_bst_recur(arr,left_i,right_i)
     return nil if left_i > right_i
 
@@ -82,6 +83,26 @@ class Tree
     pretty_print(node.left, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left
   end
 
+
+  def insert(node)
+    return nil if @data.include?(node)
+
+    parent_node = @root
+
+    while parent_node.left || parent_node.right
+      if node < parent_node.value
+        parent_node = parent_node.left
+      else
+        parent_node = parent_node.right
+      end 
+    end
+
+    if node < parent_node.value
+      parent_node.left = Node.new(node)
+    else
+      parent_node.right = Node.new(node)
+    end
+  end
 end
 
 
