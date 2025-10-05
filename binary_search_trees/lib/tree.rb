@@ -1,17 +1,40 @@
+require_relative 'node.rb'
+
 class Tree
   def initialize(array)
     @data = array
     @root = nil
   end
 
-  def build_tree(array)
+  def build_tree(array= @data)
     cleaned_arr = []
     array.each do |val|
       cleaned_arr.push(val) unless cleaned_arr.include?(val)
     end
-    array = self.merge_sort(array)
+    @data = self.merge_sort(cleaned_arr)
 
+    self.to_bst(@data)
+    end
+  def to_bst_recur(arr,left_i,right_i)
+    return nil if left_i > right_i
+
+    mid = left_i + (right_i -left_i)/2
+
+    root = Node.new(arr[mid])
+
+    root.left = to_bst_recur(arr,left_i,mid-1)
+    root.right = to_bst_recur(arr,mid + 1,right_i)
+
+    return root
   end
+
+  def to_bst(arr)
+    return nil if arr.empty?
+    @root = to_bst_recur(arr,0,(arr.length-1))
+  end
+
+
+  
 
   def merge_arrays(arr1,arr2)
     merged = []
@@ -53,5 +76,15 @@ class Tree
     return arr
   end
 
-  
+  def pretty_print(node = @root, prefix = '', is_left = true)
+    pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
+    puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.value}"
+    pretty_print(node.left, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left
+  end
+
 end
+
+data = [2,2,5,122,1,94,12,9,25,0]
+tree = Tree.new(data)
+tree.build_tree
+tree.pretty_print
