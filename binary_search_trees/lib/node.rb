@@ -3,8 +3,8 @@ class Node
 
   def initialize(value)
     @value = value
-    @left_node = nil
-    @right_node = nil
+    @left = nil
+    @right = nil
   end
 
   def <=>(name)
