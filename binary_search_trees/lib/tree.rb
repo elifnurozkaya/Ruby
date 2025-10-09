@@ -103,6 +103,78 @@ class Tree
       parent_node.right = Node.new(node)
     end
   end
+
+  def delete(num)
+    if @data.include?(num) == false
+      return nil
+    end
+
+    parent = nil
+    node = @root
+    until num == node.value
+      if num < node.value
+        parent = node
+        node = node.left
+      else
+        parent = node
+        node = node.right
+      end
+    end
+
+    if node.right == nil && node.left == nil
+      if parent.left == node
+        parent.left = nil
+        @data.delete(num)
+        return
+      else
+        parent.right = nil
+        @data.delete(num)
+        return
+      end
+    end
+
+    if node.left == nil
+      if parent.left == node
+        parent.left = node.right
+        @data.delete(num)
+        return
+      else
+        parent.right = node.right
+        @data.delete(num)
+        return
+      end
+    elsif node.right == nil
+      if parent.left == node
+        parent.left = node.left
+        @data.delete(num)
+        return
+      else
+        parent.right = node.left
+        @data.delete(num)
+        return
+      end
+    end
+
+    replacement = node.right
+    rep_parent = node
+
+      until replacement.left == nil
+        rep_parent = replacement
+        replacement = replacement.left
+      end
+    
+    rep_val = replacement.value
+    node.value = rep_val
+    
+    if rep_parent.left == replacement
+      rep_parent.left = replacement.right
+    else
+      rep_parent.right = replacement.right
+    end
+
+    
+    @data.delete(num)
+  end
 end
 
 

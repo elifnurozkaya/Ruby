@@ -5,5 +5,7 @@ tree = Tree.new(data)
 tree.build_tree
 
 tree.insert(11)
-p tree.insert(9)
+tree.insert(9)
+tree.pretty_print
+tree.delete(9)
 tree.pretty_print
