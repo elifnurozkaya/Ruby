@@ -175,6 +175,39 @@ class Tree
     
     @data.delete(num)
   end
+
+  def find(val)
+    node = @root
+
+    while node.value != val
+      if val < node.value
+        node = node.left
+      else
+        node = node.right
+      end
+    end
+    return node
+  end
+
+  def level_order(&block)
+    return [] if @root.nil?
+
+    unless block_given?
+      result = []
+      level_order{ |node| result << node.value}
+      return result
+    end
+
+    queue = [@root]
+
+    until queue.empty?
+      current = queue.shift
+      yield(current)
+
+      queue << current.left if current.left
+      queue << current.right if current.right
+    end
+  end
 end
 
 
