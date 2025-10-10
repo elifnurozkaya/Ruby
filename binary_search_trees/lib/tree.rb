@@ -229,6 +229,44 @@ class Tree
     end
 
   end
+
+  def inorder(&block)
+    return [] if @root.nil?
+
+    unless block_given?
+      result = []
+      preorder{|node| result << node.value}
+      return result
+    end
+
+    stack = []
+    current = @root
+
+    while current || !stack.empty?
+      while current
+        stack.push(current)
+        current = current.left
+      end
+
+      current = stack.pop
+      yield current
+
+      current = current.right
+    end
+
+  end
+
+  def postorder(&block)
+    return [] if @root.nil?
+
+    unless block_given?
+      result = []
+      preorder{|node| result << node.value}
+      return result
+    end
+
+    stack = []
+  end
 end
 
 
