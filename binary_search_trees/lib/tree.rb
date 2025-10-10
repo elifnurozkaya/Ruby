@@ -265,7 +265,21 @@ class Tree
       return result
     end
 
-    stack = []
+    stack1 = [@root]
+    stack2 = []
+
+    until stack1.empty?
+      node = stack1.pop
+      stack2.push(node)
+
+      stack1.push(node.left) if node.left
+      stack1.push(node.right) if node.right
+    end
+
+    until stack2.empty?
+      node = stack2.pop
+      yield node
+    end
   end
 end
 
