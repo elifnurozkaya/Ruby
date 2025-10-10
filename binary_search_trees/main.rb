@@ -12,4 +12,4 @@ tree.build_tree
 
 
 tree.pretty_print
-tree.level_order{|node| puts node.value}
+tree.preorder{|node| puts node.value}

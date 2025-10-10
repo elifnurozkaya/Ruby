@@ -208,6 +208,27 @@ class Tree
       queue << current.right if current.right
     end
   end
+
+  def preorder(&block)
+    return [] if @root.nil?
+
+    unless block_given?
+      result = []
+      preorder{|node| result << node.value}
+      return result
+    end
+
+    stack = [@root]
+
+    until stack.empty?
+      node = stack.pop
+      yield(node)
+
+      stack.push(node.right) if node.right
+      stack.push(node.left) if node.left
+    end
+
+  end
 end
 
 
