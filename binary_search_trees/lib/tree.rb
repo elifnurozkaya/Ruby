@@ -281,6 +281,40 @@ class Tree
       yield node
     end
   end
+
+  def height(val)
+    current = @root
+
+    until current.value == val
+      if val < current.value
+        current = current.left
+      else
+        current = current.right
+      end
+    end
+
+    if current == nil
+      return nil
+    end
+
+    node = current
+
+    queue = [node]
+    height = -1
+
+    until queue.empty?
+      level_size = queue.size
+      height += 1
+
+      level_size.times do
+        current = queue.shift
+        
+        queue.push(current.left) if current.left
+        queue.push(current.right) if current.right
+      end
+    end
+    return height
+  end
 end
 
 
