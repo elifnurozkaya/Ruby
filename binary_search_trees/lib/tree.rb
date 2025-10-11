@@ -315,6 +315,26 @@ class Tree
     end
     return height
   end
+
+  def depth(val)
+    counter = 0
+    current = @root
+
+    until current.value == val
+      if val < current.value 
+        current = current.left
+      else
+        current = current.right
+      end
+      
+      unless current
+        return nil
+      end
+      counter += 1
+    end
+    
+    return counter
+  end
 end
 
 

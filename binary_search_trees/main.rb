@@ -13,4 +13,5 @@ tree.build_tree
 
 tree.pretty_print
 #tree.postorder{|node| puts node.value}
-puts tree.height(12)
+#puts tree.height(12)
+puts tree.depth(122)
