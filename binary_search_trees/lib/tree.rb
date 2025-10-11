@@ -326,7 +326,7 @@ class Tree
       else
         current = current.right
       end
-      
+
       unless current
         return nil
       end
@@ -334,6 +334,33 @@ class Tree
     end
     
     return counter
+  end
+
+  def balanced?
+    balanced_recursive(@root) != -1
+  end
+
+  def balanced_recursive(node)
+    return 0 if node.nil?
+
+    left_h = balanced_recursive(node.left)
+    return -1 if left_h == -1
+
+    right_h = balanced_recursive(node.right)
+    return -1 if right_h == -1
+
+    if (left_h - right_h).abs > 1
+      return -1
+    end
+
+    return [left_h, right_h].max + 1
+  end
+
+  def rebalance
+    unless self.balanced?
+    @root = self.build_tree(inorder)
+    end
+    self
   end
 end
 
