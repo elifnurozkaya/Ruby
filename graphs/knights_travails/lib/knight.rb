@@ -1,5 +1,6 @@
 class Knight
-  def initialize(start,target)
+  attr_accessor :vertices
+  def initialize()
     @visited_vertices = []
     @vertices = {}
     @moves = [
@@ -33,25 +34,70 @@ class Knight
     valid_moves
   end
 
-  #tamamlanmadı
+  #returns the shortest paths level
   def bfs_for_knight(start,dest)
-    count = 0
+    count = -1
     current = start
     queue = [start]
-    level_size = queue.size 
+    
 
-    until queue.empty? 
+    until queue.empty?
       count += 1
-      until queue.empty?
-        if queue.shift == dest
+      level_size = queue.size 
+
+      level_size.times do 
+        current = queue.shift
+        @visited_vertices << current 
+
+        if current == dest
           return count
         end
+
+        vertices[current].each do |val|
+          queue << val unless @visited_vertices.include?(val)
+        end
+        
       end
       
-      @vertices[current].each do |nb|
-        queue >> nb
-      end
+    end
+  end
 
+  def find_shortest(start,dest)
+    level = self.bfs_for_knight(start,dest)
+    if level == 0
+      return [start]
+    end
+
+    @visited_vertices = []
+
+    path = []
+    queue = [start]
+    current = start
+    control = 0
+
+    level_size = queue.size
+
+    while true
+    control = 0
+    path = []
+      while control != level
+        control += 1
+        level_size = queue.size 
+        level_size.times do 
+            current = queue.shift
+            @visited_vertices << current 
+            path << current
+    
+            if current == dest
+              return path
+            end
+    
+            vertices[current].each do |val|
+              queue << val unless @visited_vertices.include?(val)
+            end
+            
+          end
+      end
     end
   end
 
