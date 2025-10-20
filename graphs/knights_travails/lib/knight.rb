@@ -35,69 +35,119 @@ class Knight
   end
 
   #returns the shortest paths level
-  def bfs_for_knight(start,dest)
-    count = -1
-    current = start
-    queue = [start]
+  # def bfs_for_knight(start,dest)
+  #   count = -1
+  #   current = start
+  #   queue = [start]
     
 
-    until queue.empty?
-      count += 1
-      level_size = queue.size 
+  #   until queue.empty?
+  #     count += 1
+  #     level_size = queue.size 
 
-      level_size.times do 
-        current = queue.shift
-        @visited_vertices << current 
+  #     level_size.times do 
+  #       current = queue.shift
+  #       @visited_vertices << current 
 
-        if current == dest
-          return count
-        end
+  #       if current == dest
+  #         return count
+  #       end
 
-        vertices[current].each do |val|
-          queue << val unless @visited_vertices.include?(val)
-        end
+  #       vertices[current].each do |val|
+  #         queue << val unless @visited_vertices.include?(val)
+  #       end
         
-      end
+  #     end
       
-    end
-  end
+  #   end
+  # end
+
+  # def find_shortest(start,dest)
+  #   level = self.bfs_for_knight(start,dest)
+  #   if level == 0
+  #     return [start]
+  #   end
+
+  #   @visited_vertices = []
+
+  #   path = []
+  #   queue = [start]
+  #   current = start
+  #   control = 0
+
+  #   level_size = queue.size
+
+  #   while true
+  #   control = 0
+  #   path = []
+  #     while control != level
+  #       control += 1
+  #       level_size = queue.size 
+  #       level_size.times do 
+  #           current = queue.shift
+  #           @visited_vertices << current 
+  #           path << current
+    
+  #           if current == dest
+  #             return path
+  #           end
+    
+  #           vertices[current].each do |val|
+  #             queue << val unless @visited_vertices.include?(val)
+  #           end
+            
+  #         end
+  #     end
+  #   end
+  # end
+  
 
   def find_shortest(start,dest)
-    level = self.bfs_for_knight(start,dest)
-    if level == 0
-      return [start]
+    queue = [start]
+    parent = {start => nil}
+    @visited_vertices = []
+    
+    until queue.empty?
+     
+      current = queue.shift
+      @visited_vertices << current
+
+      @vertices[current].each do |neighbor|
+        unless @visited_vertices.include?(neighbor)
+          queue << neighbor
+          parent[neighbor] = current
+
+          if neighbor == dest
+            p = give_full_path(parent,dest)
+            return show_path(p)
+          end
+        end
+      end
     end
 
-    @visited_vertices = []
-
-    path = []
-    queue = [start]
-    current = start
-    control = 0
-
-    level_size = queue.size
-
-    while true
-    control = 0
-    path = []
-      while control != level
-        control += 1
-        level_size = queue.size 
-        level_size.times do 
-            current = queue.shift
-            @visited_vertices << current 
-            path << current
     
-            if current == dest
-              return path
-            end
-    
-            vertices[current].each do |val|
-              queue << val unless @visited_vertices.include?(val)
-            end
-            
-          end
-      end
+    return nil
+  end
+
+  def give_full_path(parent,dest)
+    path = []
+    current = dest
+
+    while current 
+      path.unshift(current)
+      current = parent[current]
+    end
+    return path
+  end
+
+  def show_path(path)
+    current = path[0]
+    i = 1
+
+    while current
+      puts "#{i}. konum : #{current}"
+      current = path[i]
+      i += 1
     end
   end
 
